@@ -1,0 +1,152 @@
+{
+    "_version": "1.12.0",
+    "sap.app": {
+        "id": "logaligroup.HTML5Module",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "ach": "ach",
+        "sourceTemplate": {
+            "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+            "version": "1.40.12"
+        },
+        "dataSources": {
+            "ZEMPLOYEES_SRV": {
+                "uri": "sap/opu/odata/sap/ZEMPLOYEES_SRV/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "rootView": {
+            "viewName": "logaligroup.rrhh.HTML5Module.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        },
+        "dependencies": {
+            "minUI5Version": "1.60.1",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.ui.layout": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "logaligroup.rrhh.HTML5Module.i18n.i18n"
+                }
+            },
+            "odataModel": {
+                "type": "sap.ui.model.odata.v2.ODataModel",
+                "settings": {
+                    "defaultOperationMode": "Server",
+                    "defaultBindingMode": "OneWay",
+                    "defaultCountMode": "Request"
+                },
+                "dataSource": "ZEMPLOYEES_SRV",
+                "preload": true
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "logaligroup.rrhh.HTML5Module.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": true
+            },
+            "routes": [
+                {
+                    "name": "menu",
+                    "pattern": "",
+                    "target": [
+                        "menu"
+                    ]
+                },
+                {
+                    "name": "CreateEmployee",
+                    "pattern": "CreateEmployee",
+                    "target": [
+                        "CreateEmployee"
+                    ]
+                },
+                {
+                    "name": "ShowEmployee",
+                    "pattern": "ShowEmployee",
+                    "target": [
+                        "ShowEmployee"
+                    ]
+                }
+            ],
+            "targets": {
+                "menu": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": true,
+                    "viewId": "Menu",
+                    "viewName": "Menu"
+                },
+                "CreateEmployee": {
+                    "viewType": "XML",
+                    "viewName": "CreateEmployee",
+                    "viewId": "CreateEmployee",
+                    "transition": "slide",
+                    "clearControlAggregation": true
+                },
+                "App": {
+                    "viewType": "XML",
+                    "viewName": "App"
+                },
+                "ShowEmployee": {
+                    "viewType": "XML",
+                    "viewName": "ShowEmployee",
+                    "viewId": "ShowEmployee",
+                    "transition": "slide",
+                    "clearControlAggregation": true
+                }
+            }
+        }
+    }
+}
