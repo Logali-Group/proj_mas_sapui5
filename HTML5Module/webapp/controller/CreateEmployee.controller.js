@@ -217,7 +217,7 @@ sap.ui.define([
 				body[i] = json[i];
 			}
 		}
-		body.SapId = "p2001897818";
+        body.SapId = this.getOwnerComponent().SapId;
 		body.UserToSalary = [{
 			Ammount : parseFloat(json._Salary).toString(),
 			Comments : json.Comments,
@@ -285,7 +285,7 @@ sap.ui.define([
 	 function onBeforeUploadStart (oEvent) {
 	   var oCustomerHeaderSlug = new UploadCollectionParameter({
 				name: "slug",
-				value: "p2001897818;"+this.newUser+";"+oEvent.getParameter("fileName")
+				value: this.getOwnerComponent().SapId+";"+this.newUser+";"+oEvent.getParameter("fileName")
 			});
 			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
 	  }

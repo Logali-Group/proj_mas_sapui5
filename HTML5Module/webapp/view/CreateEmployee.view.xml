@@ -37,7 +37,7 @@
 													text="{i18n>step2ms}" showIcon="true"/>
 											<form:SimpleForm
 													editable="true">
-												<Label text="{i18n>nombre}" required="true"/>
+				                                <Label text="{i18n>nombre}" required="true"/>
 												<Input valueState="{/_FirstNameState}" change="dataEmployeeValidation" value="{/FirstName}"/>
 												<Label text="{i18n>apellidos}" required="true"/>
 												<Input valueState="{/_LastNameState}" change="dataEmployeeValidation" value="{/LastName}"/>

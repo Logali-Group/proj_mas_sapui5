@@ -1,6 +1,6 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/ui/core/routing/History"
+    "sap/ui/core/routing/History"
 ], function (Controller,History) {
 	"use strict";
 	
@@ -29,7 +29,7 @@ sap.ui.define([
 		this.employeeId = context.getProperty("EmployeeId");
 		var detailEmployee = this.byId("detailEmployee");
 		//Se bindea a la vista con la entidad Users y las claves del id del empleado y el id del alumno
-		detailEmployee.bindElement("odataModel>/Users(EmployeeId='"+ this.employeeId +"',SapId='p2001897818')");
+		detailEmployee.bindElement("odataModel>/Users(EmployeeId='"+ this.employeeId +"',SapId='"+this.getOwnerComponent().SapId+"')");
 		
 	}
 	
@@ -41,7 +41,7 @@ sap.ui.define([
 			onClose : function(oAction){
 			    	if(oAction === "OK"){
 			    		//Se llama a la función remove
-						this.getView().getModel("odataModel").remove("/Users(EmployeeId='" + this.employeeId + "',SapId='p2001897818')",{
+						this.getView().getModel("odataModel").remove("/Users(EmployeeId='" + this.employeeId + "',SapId='"+this.getOwnerComponent().SapId+"')",{
 							success : function(data){
 								sap.m.MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("seHaEliminadoUsuario"));
 								//En el detalle se muestra el mensaje "Seleecione empleado"
@@ -83,7 +83,7 @@ sap.ui.define([
 			Ammount : odata.Ammount,
 			CreationDate : odata.CreationDate,
 			Comments : odata.Comments,
-			SapId : "p2001897818",
+			SapId : this.getOwnerComponent().SapId,
 			EmployeeId : this.employeeId
 		};
 		this.getView().setBusy(true);
@@ -119,7 +119,7 @@ sap.ui.define([
 	 function onBeforeUploadStart (oEvent) {
 	   var oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
 				name: "slug",
-				value: "p2001897818;"+this.employeeId+";"+oEvent.getParameter("fileName")
+				value: this.getOwnerComponent().SapId+";"+this.employeeId+";"+oEvent.getParameter("fileName")
 			});
 			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
       }
