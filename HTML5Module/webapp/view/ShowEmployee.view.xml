@@ -7,7 +7,7 @@
 					<Button icon="sap-icon://nav-back" press="onPressBack"></Button>
 					<SearchField liveChange="onSearchEmployee" width="100%" />
 				</Toolbar>
-				<List itemPress="onSelectEmployee" items="{odataModel>/Users}">
+				<List itemPress="onSelectEmployee" items="{path:'odataModel>/Users',filters:[{path:'SapId',operator:'EQ',value1:'training@logaligroup.com'}]}">
 					<items>
 						<StandardListItem title="{odataModel>FirstName} {odataModel>LastName}" description="{odataModel>Dni}" type="Active"/>
 					</items>
