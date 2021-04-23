@@ -1,1 +1,1 @@
-destinations=[{"name":"NPL","url":"http://NPL.dest","proxyHost":"http://127.0.0.1","proxyPort":"8887"}]
+destinations=[]

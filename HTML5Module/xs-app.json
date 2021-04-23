@@ -9,7 +9,7 @@
       "authenticationType": "none",
       "csrfProtection": false,
       "source": "^/sap/opu/odata/sap/ZEMPLOYEES_SRV/",
-      "destination": "NPL"
+      "destination": "logaligroupERP"
     },
     {
       "source": "^(.*)$",
