@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZEMPLOYEES_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="User" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="EmployeeId"/>
+                    <PropertyRef Name="SapId"/>
+                </Key>
+                <Property Name="EmployeeId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Employee ID"/>
+                <Property Name="SapId" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="SAP Id"/>
+                <Property Name="Type" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Type"/>
+                <Property Name="FirstName" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="First Name"/>
+                <Property Name="LastName" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Last Name"/>
+                <Property Name="Dni" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Document Id"/>
+                <Property Name="CreationDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Date"/>
+                <Property Name="Comments" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="Comments"/>
+                <NavigationProperty Name="UserToAttachment" Relationship="ZEMPLOYEES_SRV.Assoc_User_Attachment" FromRole="FromRole_Assoc_User_Attachment" ToRole="ToRole_Assoc_User_Attachment"/>
+                <NavigationProperty Name="UserToSalary" Relationship="ZEMPLOYEES_SRV.Assoc_User_Salary" FromRole="FromRole_Assoc_User_Salary" ToRole="ToRole_Assoc_User_Salary"/>
+            </EntityType>
+            <EntityType Name="Salary" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="SalaryId"/>
+                    <PropertyRef Name="SapId"/>
+                    <PropertyRef Name="EmployeeId"/>
+                </Key>
+                <Property Name="SalaryId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Salary Id"/>
+                <Property Name="SapId" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Sap Id"/>
+                <Property Name="EmployeeId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Employee Id"/>
+                <Property Name="CreationDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Date"/>
+                <Property Name="Amount" Type="Edm.Decimal" Precision="17" Scale="2" sap:unicode="false" sap:unit="Waers" sap:label="Amount" sap:sortable="false"/>
+                <Property Name="Waers" Type="Edm.String" MaxLength="5" sap:unicode="false" sap:label="Currency" sap:semantics="currency-code"/>
+                <Property Name="Comments" Type="Edm.String" MaxLength="200" sap:unicode="false" sap:label="Comments"/>
+            </EntityType>
+            <EntityType Name="Attachment" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="AttId"/>
+                    <PropertyRef Name="SapId"/>
+                    <PropertyRef Name="EmployeeId"/>
+                </Key>
+                <Property Name="AttId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Dummy"/>
+                <Property Name="SapId" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="SAP Id"/>
+                <Property Name="EmployeeId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Empoyee Id"/>
+                <Property Name="DocName" Type="Edm.String" Nullable="false" MaxLength="80" sap:unicode="false" sap:label="Document Name"/>
+                <Property Name="MimeType" Type="Edm.String" Nullable="false" MaxLength="128" sap:unicode="false" sap:label="MIME type"/>
+            </EntityType>
+            <Association Name="Assoc_User_Salary" sap:content-version="1">
+                <End Type="ZEMPLOYEES_SRV.User" Multiplicity="*" Role="FromRole_Assoc_User_Salary"/>
+                <End Type="ZEMPLOYEES_SRV.Salary" Multiplicity="*" Role="ToRole_Assoc_User_Salary"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Assoc_User_Salary">
+                        <PropertyRef Name="EmployeeId"/>
+                        <PropertyRef Name="SapId"/>
+                    </Principal>
+                    <Dependent Role="ToRole_Assoc_User_Salary">
+                        <PropertyRef Name="EmployeeId"/>
+                        <PropertyRef Name="SapId"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Assoc_User_Attachment" sap:content-version="1">
+                <End Type="ZEMPLOYEES_SRV.User" Multiplicity="*" Role="FromRole_Assoc_User_Attachment"/>
+                <End Type="ZEMPLOYEES_SRV.Attachment" Multiplicity="*" Role="ToRole_Assoc_User_Attachment"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Assoc_User_Attachment">
+                        <PropertyRef Name="EmployeeId"/>
+                        <PropertyRef Name="SapId"/>
+                    </Principal>
+                    <Dependent Role="ToRole_Assoc_User_Attachment">
+                        <PropertyRef Name="EmployeeId"/>
+                        <PropertyRef Name="SapId"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZEMPLOYEES_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="Users" EntityType="ZEMPLOYEES_SRV.User" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="Salaries" EntityType="ZEMPLOYEES_SRV.Salary" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="Attachments" EntityType="ZEMPLOYEES_SRV.Attachment" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="Assoc_User_Salary_AssocSet" Association="ZEMPLOYEES_SRV.Assoc_User_Salary" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Users" Role="FromRole_Assoc_User_Salary"/>
+                    <End EntitySet="Salaries" Role="ToRole_Assoc_User_Salary"/>
+                </AssociationSet>
+                <AssociationSet Name="Assoc_User_Attachements" Association="ZEMPLOYEES_SRV.Assoc_User_Attachment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="Users" Role="FromRole_Assoc_User_Attachment"/>
+                    <End EntitySet="Attachments" Role="ToRole_Assoc_User_Attachment"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link rel="self" href="http://erp13.sap4practice.com:9037/sap/opu/odata/sap/ZEMPLOYEES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://erp13.sap4practice.com:9037/sap/opu/odata/sap/ZEMPLOYEES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
